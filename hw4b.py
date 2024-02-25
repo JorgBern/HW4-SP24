@@ -43,6 +43,7 @@ def equation2(x):
 
 def find_root(equation, guess, tolerance=1e-6):
     """Attempts to find a root of the given equation near the provided guess.
+
     Args:
         equation: The equation function (either equation1 or equation2).
         guess: An initial guess for the root.
@@ -75,7 +76,7 @@ def find_intersection(guess):
     intersection_x = fsolve(lambda x: equation1(x) - equation2(x), guess)
     intersection_y = equation1(intersection_x)  # Or equation2(intersection_x)
     return intersection_x[0], intersection_y[0]
-def main():
+def root_intersection_finder():
     """
     This function is trying to find roots of two equations (equation1 and equation2) using
     different initial guesses. If it fails to find a root near a guess, it asks if the user
@@ -215,7 +216,9 @@ def main():
     plt.grid(True)
     plt.show()
     print("The equations intersect at the point:", (x_intersect, y_intersect))
-main()
+
+if __name__ == "__main__":
+    root_intersection_finder()
 
 
 
