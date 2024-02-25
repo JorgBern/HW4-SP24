@@ -1,15 +1,15 @@
 # The order and events of code:
 # Press "run" button
-#   1) A plot (eqn 1) appears and a question is asked.
-#      type in a guess, press enter
-#   2) A second plot (eqn 2) appears and a question is asked.
-#      type in a guess, press enter
-#   3) if the guesses are near a root, A plot with the root will show for the respective eqn and
+#   1) first plot (eqn 1) appears, question is asked.
+#      -type in a guess, press enter
+#   2) second plot (eqn 2) appears, question is asked.
+#      -type in a guess, press enter
+#   3) If the guesses are near a root, a plot with the root will display for the respective eqn and
 #      the roots will display numerically on the CLI. (2 plots will appear for this step)
 #      if there is no root near the guess, user will be told no root near the guess and
-#      asked would you like to make another guess?
+#      asked would you like to make another guess (y/n)
 #   4) A final question is asked, make a guess where the eqn's might intersect?
-#      take a guess, press enter, plot appears showing where a near intersection exist.
+#      take a guess, press enter, plot displays showing where a near intersection exist.
 #   Assumptions:
 #       You will use the plots to help make a more accurate guess, although the code is constructed
 #       to handle "bad" guesses.
