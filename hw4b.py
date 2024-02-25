@@ -1,3 +1,20 @@
+# The order and events of code:
+# Press "run" button
+#   1) A plot (eqn 1) appears and a question is asked.
+#      type in a guess, press enter
+#   2) A second plot (eqn 2) appears and a question is asked.
+#      type in a guess, press enter
+#   3) if the guesses are near a root, A plot with the root will show for the respective eqn and
+#      the roots will display numerically on the CLI. (2 plots will appear for this step)
+#      if there is no root near the guess, user will be told no root near the guess and
+#      asked would you like to make another guess?
+#   4) A final question is asked, make a guess where the eqn's might intersect?
+#      take a guess, press enter, plot appears showing where a near intersection exist.
+#   Assumptions:
+#       You will use the plots to help make a more accurate guess, although the code is constructed
+#       to handle "bad" guesses.
+#       Recommend clearing the plots between each run, as they can build up quickly.
+
 import numpy as np
 from scipy.optimize import fsolve
 import matplotlib.pyplot as plt
@@ -21,6 +38,8 @@ def equation2(x):
     Gemini assisted with the development of this function
     """
     return np.cos(2 * x) * (x**3)
+
+
 
 def find_root(equation, guess, tolerance=1e-6):
     """Attempts to find a root of the given equation near the provided guess.
@@ -55,17 +74,6 @@ def find_intersection(guess):
 
     intersection_x = fsolve(lambda x: equation1(x) - equation2(x), guess)
     intersection_y = equation1(intersection_x)  # Or equation2(intersection_x)
-
-# Visualization
-    x = np.linspace(-10, 10, 200)
-    plt.plot(x, equation1(x), label="x - 3cos(x)")
-    plt.plot(x, equation2(x), label="cos(2x) * x^3")
-    plt.scatter(intersection_x, intersection_y, color='red', label="Intersection")
-    plt.xlabel("x")
-    plt.ylabel("y")
-    plt.legend()
-    plt.grid(True)
-    plt.show()
     return intersection_x[0], intersection_y[0]
 def main():
     """
@@ -84,7 +92,7 @@ def main():
     # Plotting
     x = np.linspace(-15, 15, 200)  # Range for plotting
 
-    # Plot equation 1
+    # Plot equation 1 to assist in initial guess
     plt.figure(1)
     plt.plot(x, equation1(x))
     plt.xlabel('x')
@@ -98,7 +106,7 @@ def main():
         "Using the provided plots, make a guess where a root might exist in each equation, multiple guesses should be separated by commas.\nFor x - 3cos(x) = 0, your guess is:  ")
     guesses_eqn1 = [float(guess) for guess in input_str.split(',')]
 
-    # Plot equation 2
+    # Plot equation 2 to assist in intial guess
     plt.figure(2)
     plt.plot(x, equation2(x))
     plt.xlabel('x')
@@ -110,6 +118,8 @@ def main():
     # Input guesses for the second equation
     input_str = input("For cos(2x) \u00B7 x\u00B3 = 0, your guess is:  ")
     guesses_eqn2 = [float(guess) for guess in input_str.split(',')]
+
+    # Locate the roots near the guess for each equation
     for equation, guesses in [(equation1, guesses_eqn1), (equation2, guesses_eqn2)]:
         for i, guess in enumerate(guesses):  # Track guess index
             if equation == equation1:
@@ -118,7 +128,7 @@ def main():
                     print(f"Root near to guess #{i+1} for x - 3cos(x) = 0:  {root1}")
                     plt.figure(1)
                     plt.plot(root1, 0, 'ro')
-                else:
+                else:  # if no root is found near the guess for eqn 1
                     while True:
                         response = input(f"Unable to locate root near guess {guess} for equation x - 3cos(x) = 0, guess again? (y/n): ").lower()
                         if response == 'y':
@@ -140,7 +150,7 @@ def main():
                     print(f"Root near to guess #{i+1} for cos(2x) \u00B7 x\u00B3 = 0:  {root2}")
                     plt.figure(2)
                     plt.plot(root2, 0, 'ro')
-                else:
+                else:  # if no root is found near the guess for eqn 2
                     while True:
                         response = input(f"Unable to locate root near guess {guess} for equation cos(2x) \u00B7 x\u00B3 = 0, guess again? (y/n): ").lower()
                         if response == 'y':
@@ -164,32 +174,50 @@ def main():
         plt.figure(1)
         plt.plot(x, equation1(x))
         plt.plot(root1, 0, 'ro')  # Mark root with red dot
-
+    # Plot Labels
         plt.xlabel('x')
         plt.ylabel('y')
         plt.title('Plot of x - 3cos(x) = 0')
         plt.grid(True)
 
-    plt.figure(2)
-    plt.plot(x, equation2(x))
+    # Check if root2 is not None before plotting
     if root2 is not None:
+        plt.figure(2)
+        plt.plot(x, equation2(x))
         plt.plot(root2, 0, 'ro')  # Mark root with red dot
-    # Plot equation 2
-    #plt.plot(root2, 0, 'ro')  # Mark roots with red dots
+    # Plot Labels
         plt.xlabel('x')
         plt.ylabel('y')
         plt.title('Plot of cos(2x) \u00B7 x\u00B3 = 0')
         plt.grid(True)
-
+    # Show the plots
     plt.show()
+
+    # Guess the x-coordinate where the equations might intersect
     while True:
         try:
-            user_guess = float(input("Guess x-coordinate where the lines might intersect: "))
+            user_guess = float(input("Guess x-coordinate where the lines might intersect (one pt. only): "))
             break
         except ValueError:
             print("Invalid input. Please enter a number.")
 
     # Find the intersection near the guess
     x_intersect, y_intersect = find_intersection(user_guess)
-    print("The equations intersect near the point:", (x_intersect, y_intersect))
+
+    # Plotting the intersection point
+    x = np.linspace(-10, 10, 200)
+    plt.plot(x, equation1(x), label="x - 3cos(x)")
+    plt.plot(x, equation2(x), label="cos(2x) * x^3")
+    plt.scatter(x_intersect, y_intersect, color='red', label="Intersection")
+    plt.xlabel("x")
+    plt.ylabel("y")
+    plt.legend()
+    plt.grid(True)
+    plt.show()
+    print("The equations intersect at the point:", (x_intersect, y_intersect))
 main()
+
+
+
+
+
