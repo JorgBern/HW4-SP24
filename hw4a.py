@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 def define_distribution(mean, std_dev):
     '''
     This function creates a normal distribution using the stat.norm function from scipy, it takes in the mean
-    the standard deviation for each problem and uses them to create the distribution for each.
+    the standard deviation for each problem and uses them to create the distribution.
 
     Parameters:
     Mean(float): The mean of the distribution.
@@ -22,10 +22,10 @@ def define_distribution(mean, std_dev):
 
 def calculate_probability(dist, x_value):
     '''
-    Calculate the probability that a random variable is less than
-    or equal to a given value. This works perfectly for the first problem since it requires for the probability of
-    values less than 1, but for the second one, it requires values greater than 181, to account for this
-    later we do 1-prob for the second problem to get the correct value.
+    Calculates the probability that a random variable is less than
+    or equal to the x-value. This works perfectly for the first part of the problem since it requires the probability of
+    values less than 1. But for the second one, it requires values greater than 181, to account for this
+    we do 1-prob to get the correct value.
 
     This function uses the cumulative distribution function (CDF) of the distribution
     to calculate the probability.
@@ -39,8 +39,6 @@ def calculate_probability(dist, x_value):
 
 def generate_data(start, end):
     '''
-    Generates an array of evenly spaced numbers over a specified range.
-
     This function uses the numpy linspace function to generate an array of 100 evenly spaced
     numbers between a start and end value . I chose 100 because changing it to a higher value, did not affect
     the look of the plots.
@@ -55,9 +53,9 @@ def generate_data(start, end):
 def create_normal_dist_plot(ax, x, dist, x_value, mean, std_dev, xytext, xy):
     '''
     This function plots a normal distribution curve using the pdf function from scipy and shades the
-    area under the curve based on the x value. There is an if statement is there since both problems
-    are being sent to this function, it detects if the x value is 1, if it is, it shades the area before it, if is not 1
-    it shades the area after it.
+    area under the curve based on the x value. The if-then statement is there to account for both problems. If
+    the function detects that the x_value is 1, then it shades the area before the x_value. If it is not 1, it shades
+    the area after the x_value, in this case 181.
 
     A lot of this code is just dedicated to the formatting of the graph
     :param ax: The axes to draw the plot on the plot.
@@ -125,7 +123,7 @@ def create_standardized_dist_plot(ax, x, dist, x_value):
     ax.set_xlabel('x')
     # Adds ticks to the top
     ax.xaxis.tick_top()
-    # Adds ticks to the bttom
+    # Adds ticks to the bottom
     ax.yaxis.tick_right()
     ax.tick_params(axis='x', direction='in', which='both', top=True, bottom=True, labelbottom=True, labeltop=False)
     ax.tick_params(axis='y', direction='in', which='both', left=True, right=True, labelleft=True, labelright=False)
@@ -142,13 +140,19 @@ def create_standardized_dist_plot(ax, x, dist, x_value):
 def main():
     '''
     This program calculates probabilities of chosen x values for two normal distributions and creates 4 plots.
-    It does not take user input, if values are changed they have to be changed in the code, but they are tied in so it
-    is an easy process. The mean1, std_dev1, and x1 correspond to the first problem and mean2, std_Dev2,and x2 correspond
-    to the second problem.
-    - The two top plots are the normal distributions of each problem with the areas under the curve shaded based on the
-    x-values
-    - Two plots at the bottom are based on the standardized normal distribution using the CDF function with the x-value
-    marked
+    It does not take user input, if values want to be changed, they have to be changed in the code, but they are tied to
+    variables which makes it simple.
+    -   Mean1: Mean of standard distribution for problem1
+    -   Std_dev1: Standard Deviation for problem1
+    -   x1: Chosen x for problem1
+    -   Mean2: Mean of standard distribution for problem2
+    -   std_dev2: Standard Deviation for problem2
+    -   X2: Chosen x for problem2
+
+    -   Plot info: 4 plots are displayed
+        Top two plots are Normal distribution plots with areas shaded under the curve based on stated x-values
+        Bottom two are Standardized normal distribution plots with the chosen x-values marked as well as the
+        corresponding cdf value.
     :return:None
     '''
     # Define means and standard deviations
@@ -190,7 +194,6 @@ def main():
 
 if __name__ == "__main__":
     main()
-
 
 
 
