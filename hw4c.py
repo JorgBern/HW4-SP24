@@ -17,6 +17,7 @@ def get_matrix_from_user():
     Returns:
         matrix (numpy.ndarray): The user-inputted augmented matrix. If the user inputs a row with a number of elements
         that doesn't match the number of columns, the function will print an error message and return None.
+    Chatgpt assisted with the development of this function.
     """
     # Get the size of the matrix
     rows = int(input("Enter the number of rows in the augmented matrix: "))
@@ -42,6 +43,7 @@ def solve_system():
     systems of equations until the user chooses to stop.
     If the system of equations cannot be solved, the function will print an error message
     and prompt the user to input another system.
+    Chatgpt assisted with the development of this function.
     """
     # Define subscript numbers as a dictionary
     subscript = {"0": "₀", "1": "₁", "2": "₂", "3": "₃", "4": "₄", "5": "₅", "6": "₆", "7": "₇", "8": "₈", "9": "₉"}
