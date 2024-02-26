@@ -1,3 +1,4 @@
+#ChatGPT was used to help write this code
 import numpy as np
 from scipy import stats
 import matplotlib.pyplot as plt
